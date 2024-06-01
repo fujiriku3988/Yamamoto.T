@@ -24,4 +24,6 @@ private:
 	float m_speed;
 	float m_anima;
 	int m_run[4];
+	//重力
+	float m_gravity;
 };
