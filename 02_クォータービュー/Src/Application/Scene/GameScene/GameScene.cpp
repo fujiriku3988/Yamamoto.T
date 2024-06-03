@@ -13,7 +13,7 @@ void GameScene::Event()
 		playerPos = m_player.lock()->GetPos();
 	}
 
-	Math::Matrix transMat = Math::Matrix::CreateTranslation(Math::Vector3(0, 3,-3) + playerPos);
+	Math::Matrix transMat = Math::Matrix::CreateTranslation(Math::Vector3(0, 5,-5) + playerPos);
 	//Math::Matrix playerMat = Math::Matrix::CreateTranslation(playerPos);
 	Math::Matrix rotMatX = Math::Matrix::CreateRotationX(DirectX::XMConvertToRadians(30));
 	Math::Matrix cameraMat = rotMatX * transMat;
