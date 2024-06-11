@@ -3,6 +3,7 @@
 #include"Application/Object/BackGround/BackGround.h"
 #include"Application/Object/Ground/Ground.h"
 #include"Application/Object/Player/Player.h"
+#include"Application/Object/Enemy/Enemy.h"
 
 void GameScene::Event()
 {
@@ -13,12 +14,12 @@ void GameScene::Event()
 		playerPos = m_player.lock()->GetPos();
 	}
 
-	Math::Matrix transMat = Math::Matrix::CreateTranslation(Math::Vector3(0, 5,-5) + playerPos);
+	Math::Matrix transMat = Math::Matrix::CreateTranslation(Math::Vector3(0, 5, -5) + playerPos);
 	//Math::Matrix playerMat = Math::Matrix::CreateTranslation(playerPos);
 	Math::Matrix rotMatX = Math::Matrix::CreateRotationX(DirectX::XMConvertToRadians(30));
 	Math::Matrix cameraMat = rotMatX * transMat;
 	m_camera->SetCameraMatrix(cameraMat);
-	
+
 }
 
 void GameScene::Init()
@@ -39,4 +40,13 @@ void GameScene::Init()
 	player->Init();
 	AddObject(player);
 	m_player = player;
+
+	for (int i = 0; i < 20; i++)
+	{
+		std::shared_ptr<Enemy>enemy = std::make_shared<Enemy>();
+		enemy->Init();
+		enemy->SetPosEnemy({ -20.0f + (10.0f * i),0.0f,20.0f });
+		enemy->SetTarget(player);
+		AddObject(enemy);
+	}
 }

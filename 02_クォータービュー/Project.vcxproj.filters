@@ -82,6 +82,12 @@
     <Filter Include="Src\Application\Object\Player">
       <UniqueIdentifier>{7dd3f501-d535-498f-af57-f19269f87da3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\Object\Enemy">
+      <UniqueIdentifier>{5bf9c659-2493-410c-a578-33250d644e3e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\Object\Attack">
+      <UniqueIdentifier>{b8e57374-caa2-46a9-bd85-c6b2933c1e5d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -255,6 +261,12 @@
     <ClInclude Include="Src\Application\Object\Player\Player.h">
       <Filter>Src\Application\Object\Player</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\Object\Enemy\Enemy.h">
+      <Filter>Src\Application\Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\Object\Attack\Attack.h">
+      <Filter>Src\Application\Object\Attack</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -403,6 +415,12 @@
     </ClCompile>
     <ClCompile Include="Src\Application\Object\Player\Player.cpp">
       <Filter>Src\Application\Object\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Object\Enemy\Enemy.cpp">
+      <Filter>Src\Application\Object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Object\Attack\Attack.cpp">
+      <Filter>Src\Application\Object\Attack</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -1,25 +1,12 @@
 ﻿#pragma once
-class Player :public KdGameObject
+class Player;
+class Enemy :public KdGameObject
 {
 public:
-	enum DirType
-	{
-		Up = 1 << 0,	//上
-		Down = 1 << 1,	//下
-		Left = 1 << 2,	//左
-		Right = 1 << 3	//右
-	};
-	//アニメーション情報
-	struct AnimetionInfo
-	{
-		int start;	//開始コマ
-		int end;	//終了コマ
-		float count;//現在のコマ数カウント
-		float speed;//アニメーションの速度
-	};
 
-	Player() {}
-	~Player() {}
+
+	Enemy() {}
+	~Enemy() {}
 
 	void Init()override;
 
@@ -29,17 +16,29 @@ public:
 	void DrawLit()override;
 	//影だけ生み出すもの描画とかはしない
 	void GenerateDepthMapFromLight()override;
+
+	void search();
+
+	void SetPosEnemy(Math::Vector3 pos) { m_pos = pos; }
+
+	void SetTarget(std::weak_ptr<Player>_target);
 private:
 
-	void ChangeAnimation();
+	//void ChangeAnimation();
 
 	//板ポリ
-	KdSquarePolygon m_poly;
+	std::shared_ptr<KdSquarePolygon> m_poly;
+	std::weak_ptr<Player> m_target;
 	Math::Vector3 m_scale;
 	Math::Vector3 m_pos;
 
 	//アニメーション情報
-	AnimetionInfo m_animeInfo;
+	float m_animeCnt;
+	float m_animeSpeed;
+
+	//サーチ
+	bool m_chaseFlg;
+	float m_searchArea;
 
 	//キャラが向いている方向種類 ビット管理
 	UINT m_dirType;
@@ -47,8 +46,6 @@ private:
 	Math::Vector3 m_dir;
 	//移動量（ベクトルの向き）
 	float m_speed;
-	float m_anima;
-	int m_run[4];
 	//重力
 	float m_gravity;
 };
