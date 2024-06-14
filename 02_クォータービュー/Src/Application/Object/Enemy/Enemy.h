@@ -22,6 +22,8 @@ public:
 	void SetPosEnemy(Math::Vector3 pos) { m_pos = pos; }
 
 	void SetTarget(std::weak_ptr<Player>_target);
+
+	void OnHit()override;
 private:
 
 	//void ChangeAnimation();

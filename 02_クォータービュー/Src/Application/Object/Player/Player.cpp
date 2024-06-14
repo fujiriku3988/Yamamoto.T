@@ -1,15 +1,18 @@
 ﻿#include "Player.h"
 #include"../../Scene/SceneManager.h"
-
+#include"../../Object/Attack/Attack.h"
+#include"../../Scene/BaseScene/BaseScene.h"
+#include"../../Scene/GameScene/GameScene.h"
 void Player::Init()
 {
 	//プレイヤー
 	m_poly.SetMaterial("Asset/Textures/Player.png");
 	m_poly.SetPivot(KdSquarePolygon::PivotType::Center_Bottom);
-	m_scale = { 3 };
+	m_scale = { 2 };
 	m_pos = {};
 	m_speed = 0.1f;
 	m_gravity = 0.0f;
+	m_keyFlg = false;
 	//アニメーション分割：横・縦
 	m_poly.SetSplit(4, 8);
 	m_mWorld = Math::Matrix::Identity;
@@ -17,15 +20,14 @@ void Player::Init()
 	m_pDebugWire = std::make_unique<KdDebugWireFrame>();
 	//向いている方向
 	m_dirType = DirType::Down;
+	m_dir = {};
+	m_attackDir = {};
 	//m_dirType = 0;
 	//初期アニメーション
 	m_animeInfo.start = 4;
 	m_animeInfo.end = 7;
 	m_animeInfo.count = 0;
 	m_animeInfo.speed = 0.05f;
-	//当たり判定を設定
-	m_pCollider = std::make_unique<KdCollider>();
-	m_pCollider->RegisterCollisionShape("Search", { 0,0.5f,0 }, 0.4f, KdCollider::TypeSight);
 }
 
 void Player::Update()
@@ -69,6 +71,10 @@ void Player::Update()
 	if (m_dirType != 0 && m_dirType != oldDirType)
 	{
 		ChangeAnimation();
+
+		//最後に変更された向き＝攻撃方向
+		m_attackDir = m_dir;
+		m_attackDir.Normalize();
 	}
 	else
 	{
@@ -94,6 +100,33 @@ void Player::Update()
 	m_pos += (m_dir * m_speed);
 	m_pos.y -= m_gravity;
 	m_gravity += 0.005f;
+
+	if (GetAsyncKeyState('Z')& 0x8000)
+	{
+		if (!m_keyFlg)
+		{
+			m_keyFlg = true;
+
+			//攻撃オブジェクト
+			Math::Vector3 _attackPos = {};
+
+			_attackPos = m_pos;
+			_attackPos += m_attackDir * 0.4f;
+
+			atk = std::make_shared<Attack>();
+			atk->Init();
+			atk->SetPos(_attackPos);
+			SceneManager::Instance().AddObject(atk);
+			//m_owner->AddObject(atk);
+
+			//攻撃SE再生
+			KdAudioManager::Instance().Play("Asset/Sounds/Attack.WAV",false);
+		}
+	}
+	else
+	{
+		m_keyFlg = false;
+	}
 
 	//レイの判定
 	KdCollider::RayInfo rayInfo;

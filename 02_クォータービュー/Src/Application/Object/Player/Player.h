@@ -1,4 +1,5 @@
 ﻿#pragma once
+class Attack;
 class Player :public KdGameObject
 {
 public:
@@ -43,12 +44,21 @@ private:
 
 	//キャラが向いている方向種類 ビット管理
 	UINT m_dirType;
+
 	//方向（ベクトルの向き）
 	Math::Vector3 m_dir;
+
 	//移動量（ベクトルの向き）
 	float m_speed;
+
+	//攻撃方向
+	Math::Vector3 m_attackDir;
+
 	float m_anima;
 	int m_run[4];
 	//重力
 	float m_gravity;
+	//防止
+	bool m_keyFlg;
+	std::shared_ptr<Attack>atk = nullptr;
 };

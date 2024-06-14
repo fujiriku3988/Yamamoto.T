@@ -9,11 +9,12 @@ public:
 	void Update()override;
 	void DrawUnLit()override;
 
-private:
+	void OnHit()override;
 
+private:
 	KdSquarePolygon m_polygon;
 
-	float m_animeCnt;
+	float m_animeCnt;//9コマ
 	float m_animeSpeed;
 
 	float m_attackArea;

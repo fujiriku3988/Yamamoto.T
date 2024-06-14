@@ -22,9 +22,9 @@ void Enemy::Init()
 	//向いている方向
 	m_speed = 0.05f;
 	m_animeCnt = 0.0f;
-	//当たり判定を設定
+	//当たり判定設定(コライダー)
 	m_pCollider = std::make_unique<KdCollider>();
-	m_pCollider->RegisterCollisionShape("Search", { 0,0.5f,0 }, 3.0f, KdCollider::TypeBump);
+	m_pCollider->RegisterCollisionShape("Enemy",m_poly, KdCollider::TypeDamage);
 }
 
 
@@ -61,6 +61,8 @@ void Enemy::Update()
 
 		if (m_chaseFlg)
 		{
+			//y軸を０にして、空中まで追いかけてこないように	
+			vec.y = 0.0f;
 			//ベクトルの長さを１に
 			vec.Normalize();
 			//向き確定
@@ -190,4 +192,9 @@ void Enemy::SetTarget(std::weak_ptr<Player> _target)
 	{
 		m_target = _target;
 	}
+}
+
+void Enemy::OnHit()
+{
+	m_isExpired = true;
 }
